@@ -2,25 +2,11 @@ var fs = require('fs');
 var AWS = require('aws-sdk');
 var uuid = require('uuid/v4');
 var user = require('../logic/user.js');
+var apicaller = require("./apicaller.js");
 AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
-var request = require('request').defaults({
-  encoding: null
-});
 var db = new AWS.DynamoDB();
 var s3 = new AWS.S3();
-
-function get(url) {
-  return new Promise(function(resolve, reject) {
-    request.get(url, function(error, response, body) {
-      if (!error && response.statusCode == 200) {
-        resolve(body);
-      } else {
-        reject(error);
-      }
-    });
-  });
-}
 
 function get_face(params) {
   return new Promise(function(resolve, reject) {
@@ -89,7 +75,7 @@ function process_image(url) {
   var encoded;
   var fileExt = url.split('.').pop();
   console.log("PHASE0: " + url)
-  return get(url).then(function(data) {
+  return apicaller.get(url).then(function(data) {
     encoded = data;
     var params = {
       CollectionId: "the_collection",
@@ -99,7 +85,7 @@ function process_image(url) {
       },
       MaxFaces: 1
     };
-    console.log("PHASE1")
+    console.log("PHASE1: ", encoded);
     return get_face(params);
   }).then(function(faceId) {
     var params = {
