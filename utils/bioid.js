@@ -10,7 +10,7 @@ var request = require('request').defaults({
 var db = new AWS.DynamoDB();
 var s3 = new AWS.S3();
 
-function get_and_encode(url) {
+function get(url) {
   return new Promise(function(resolve, reject) {
     request.get(url, function(error, response, body) {
       if (!error && response.statusCode == 200) {
@@ -48,14 +48,20 @@ function get_item_and_store(params, encodedUrl, fileExt) {
         .Id) {
         reject(new Error("bad item data"));
       } else {
-        storeImageInS3(encodedUrl, data.Item.FullName.S, data.Item.Id.S,
-            fileExt)
-          .then(function() {
-            resolve(data.Item.Id.S);
-          })
-          .catch(function(error) {
-            reject(error);
-          });
+        var fullName;
+        var id;
+        try {
+          fullName = data.Item.FullName.S;
+          id = data.Item.Id.S;
+        } catch(e) {
+          reject(new Error("bad item data!"));
+          return;
+        }
+        storeImageInS3(encodedUrl, fullName, id, fileExt).then(function() {
+          resolve(id);
+        }).catch(function(error) {
+          reject(error);
+        });
       }
     });
   });
@@ -82,8 +88,8 @@ function storeImageInS3(img, name, id, fileExt) {
 function process_image(url) {
   var encoded;
   var fileExt = url.split('.').pop();
-  return get_and_encode(url).then(function(encodedUrl) {
-    encoded = encodedUrl;
+  return get(url).then(function(data) {
+    encoded = data;
     var params = {
       CollectionId: "instant_collection",
       FaceMatchThreshold: 90,
