@@ -17,6 +17,13 @@ function _initStats() {
   });
 }
 
+function getStats(params) {
+  return dbutil.refs.statsRef.once("value").then(function(snapshot) {
+    if (!snapshot.exists()) return Promise.reject(new Error("Stats node empty"));
+    return snapshot.val();
+  });
+}
+
 function updateStats(newItem) {
   return dbutil.refs.statsRef.once("value").then(function(snapshot) {
     if (!snapshot.exists()) return _initStats();
@@ -41,4 +48,5 @@ function updateStats(newItem) {
   });
 }
 
+module.exports.getStats = getStats;
 module.exports.updateStats = updateStats;

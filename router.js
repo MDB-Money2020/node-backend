@@ -4,6 +4,7 @@ var dbutil = require('./utils/dbutil.js');
 var menuItem = require("./logic/menuitem.js");
 var order = require("./logic/order.js");
 var user = require("./logic/user.js");
+var stats = require("./logic/stats.js");
 var restaurant = require("./logic/restaurant.js");
 var expressValidator = require("express-validator");
 
@@ -211,6 +212,12 @@ router.patch("/users/verification/", function(req, res) {
   req.checkBody("imageUrl", missingErrorMessage).notEmpty();
   return completeRequest(req, res, user.verify);
 })
+
+// STATS METHODS
+
+router.get("/stats", function(req, res) {
+  return completeRequest(req, res, stats.getStats);
+});
 
 // EXPORTS
 module.exports = router;
