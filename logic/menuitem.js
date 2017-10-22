@@ -1,6 +1,7 @@
 var dbutil = require("../utils/dbutil.js");
 var apicaller = require("../utils/apicaller.js");
 var mlConf = require("../utils/cloudconfig.js").mlConf;
+var stats = require('./stats.js');
 
 function getById(params) {
 	var id = params.menuItemId;
@@ -37,7 +38,7 @@ function getByUser(params) {
 function getSuggested(params) {
 	return apicaller.get(mlConf.ml_endpoint + "?userId=" + params.userId +
 		"&restaurantId=" + params.restaurantId).then(function(menuItemIds) {
-			return dbutil.getAllByKeys(dbutil.refs.menuItemRef, menuItemIds);
+		return dbutil.getAllByKeys(dbutil.refs.menuItemRef, menuItemIds);
 	});
 }
 
@@ -56,8 +57,8 @@ function createMenuItem(params) {
 		ingredients: params.ingredients
 	};
 	var savedItem;
-	return dbutil.createNewObjectByAutoId(dbutil.refs.menuItemRef, item).then(
-		function(menuItem) {
+	return dbutil.createNewObjectByAutoId(dbutil.refs.menuItemRef, item)
+		.then(function(menuItem) {
 			savedItem = menuItem;
 			return dbutil.doTransaction(dbutil.refs.restaurantRef.child(params.restaurantId)
 				.child(
@@ -68,8 +69,10 @@ function createMenuItem(params) {
 					return menuItemIds;
 				});
 		}).then(function() {
-		return savedItem;
-	});
+			return stats.updateStats(savedItem);
+		}).then(function() {
+			return savedItem;
+		});
 }
 
 module.exports.getById = getById;
