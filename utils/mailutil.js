@@ -30,6 +30,5 @@ function sendEmail(email, subject, text) {
   });
 }
 
-
 // EXPORTS
 module.exports.sendEmail = sendEmail;
