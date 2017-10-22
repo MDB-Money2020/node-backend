@@ -91,7 +91,7 @@ function process_image(url) {
   return get(url).then(function(data) {
     encoded = data;
     var params = {
-      CollectionId: "instant_collection",
+      CollectionId: "the_collection",
       FaceMatchThreshold: 90,
       Image: {
         Bytes: encodedUrl
@@ -105,7 +105,7 @@ function process_image(url) {
         "FullName",
         "Id"
       ],
-      TableName: 'instant_collection',
+      TableName: 'new_collection',
       Key: {
         "RekognitionId": {
           "S": faceId
