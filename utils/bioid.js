@@ -1,6 +1,7 @@
 var fs = require('fs');
 var AWS = require('aws-sdk');
 var uuid = require('uuid/v4');
+var user = require('../logic/user.js');
 AWS.config.region = 'us-east-1';
 var rekognition = new AWS.Rekognition();
 var request = require('request').defaults({
@@ -91,6 +92,8 @@ function process_image(url) {
             }
         }
         return get_item_and_store(params, encoded, fileExt);
+    }).then(function(userId){
+        return user.getById({userId: userId});
     });
 
 }
