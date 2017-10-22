@@ -104,7 +104,7 @@ function rejectRequest(req, res) {
 //ORDER METHODS
 
 
-router.get("/orders/:orderId?/:userId?", function(req, res) {
+router.get("/orders/:orderId?/:userId?/:restaurantId?", function(req, res) {
   if (req.query.orderId) {
     req.checkQuery("orderId", missingErrorMessage).notEmpty();
     req.checkQuery("orderId", dbErrorMessage).keyExistsInDB(dbutil.refs.orderRef);
@@ -113,6 +113,10 @@ router.get("/orders/:orderId?/:userId?", function(req, res) {
     req.checkQuery("userId", missingErrorMessage).notEmpty();
     req.checkQuery("userId", dbErrorMessage).keyExistsInDB(dbutil.refs.userRef);
     return completeRequest(req, res, order.getAllOrdersForUser);
+  } else if (req.query.restaurantId) {
+    req.checkQuery("restaurantId", missingErrorMessage).notEmpty();
+    req.checkQuery("restaurantId", dbErrorMessage).keyExistsInDB(dbutil.refs.restaurantRef);
+    return completeRequest(req, res, order.getOrdersByRestaurant);
   }
   return rejectRequest(req, res);
 });

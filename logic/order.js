@@ -7,6 +7,12 @@ function getById(params) {
 	return dbutil.getByKey(dbutil.refs.orderRef, id);
 }
 
+function getOrdersByRestaurant(params) {
+  return dbutil.getObjectsByFields(dbutil.refs.orderRef, {
+		restaurantId: params.restaurantId
+	});
+}
+
 function getAllOrdersForUser(params) {
   var userId = params.userId;
   var fieldToVal = {
@@ -76,3 +82,4 @@ function placeOrder(params) {
 module.exports.getById = getById;
 module.exports.placeOrder = placeOrder;
 module.exports.getAllOrdersForUser = getAllOrdersForUser;
+module.exports.getOrdersByRestaurant = getOrdersByRestaurant;
