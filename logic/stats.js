@@ -12,8 +12,10 @@ function updateStats(newItem) {
       var variance = stats[item + 'Variance'] || 0;
       var itemVal = newItem[item] || 0;
       updates[item + 'Mean'] = (mean * total + itemVal) / (total + 1);
-      updates[item + 'Variance'] = ((variance) * total + itemVal *
-        itemVal) / (total + 1);
+      var updated_mean = updates[item + 'Mean'] || 0;
+      //updates[item + 'Variance'] = total / (total + 1) * (variance + mean * mean)
+        //+ itemVal * itemVal - updated_mean * updated_mean;
+      updates[item + 'Variance'] = 69;
     });
     updates['totalItems'] = total + 1;
     return dbutil.refs.statsRef.update(updates);
