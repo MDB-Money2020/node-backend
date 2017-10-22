@@ -39,6 +39,8 @@ function getSuggested(params) {
 	return apicaller.get(mlConf.ml_endpoint + "?userId=" + params.userId +
 		"&restaurantId=" + params.restaurantId).then(function(menuItemIds) {
 		return dbutil.getAllByKeys(dbutil.refs.menuItemRef, menuItemIds);
+	}).catch(function(error) {
+		return [];
 	});
 }
 
