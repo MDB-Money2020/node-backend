@@ -52,6 +52,9 @@ function get_item_and_store(params, encodedUrl, fileExt) {
             fileExt)
           .then(function() {
             resolve(data.Item.Id.S);
+          })
+          .catch(function(error) {
+            reject(error);
           });
       }
     });
