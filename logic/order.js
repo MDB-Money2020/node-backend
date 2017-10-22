@@ -32,12 +32,18 @@ function _sendReciept(user, order) {
 		date.setDate(date.getDate() - 6);
 		date.setFullYear(date.getFullYear() - 1);
 		var dateStr = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+		var totalPaid = String(Math.ceil(order.totalPaid));
+		if (totalPaid.indexOf(".") >= 0) {
+			if(totalPaid.splice(".")[1].length == 1) {
+				totalPaid += "0";
+			}
+		}
 		var data = {
 			dateStr: dateStr,
 			userName: user.fullName,
 			userEmail: user.email,
 			invoiceItems: invoiceItems,
-			totalPaid: Math.ceil(order.totalPaid)
+			totalPaid: totalPaid
 		}
 		return mailutil.renderTemplate(recieptTemplate, data);
 	}).then(function(html) {
