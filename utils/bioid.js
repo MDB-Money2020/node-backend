@@ -94,7 +94,7 @@ function process_image(url) {
       CollectionId: "the_collection",
       FaceMatchThreshold: 90,
       Image: {
-        Bytes: encodedUrl
+        Bytes: encoded
       },
       MaxFaces: 1
     };
