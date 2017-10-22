@@ -26,7 +26,7 @@ function get_face(params) {
     return new Promise(function(resolve, reject) {
         rekognition.searchFacesByImage(params, function(err, data) {
             if (err) reject(err);
-            if (!data || data.FaceMatches.length == 0 || !data.FaceMatches[0].Face || !data.FaceMatches[0].Face.FaceId) {
+            if (!data || !data.FaceMatches || data.FaceMatches.length == 0 || !data.FaceMatches[0].Face || !data.FaceMatches[0].Face.FaceId) {
                 return reject();
             }
             resolve(data.FaceMatches[0].Face.FaceId);
