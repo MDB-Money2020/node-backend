@@ -37,10 +37,10 @@ function getByUser(params) {
 
 function getSuggested(params) {
 	return apicaller.get(mlConf.ml_endpoint + "?userId=" + params.userId +
-		"&restaurantId=" + params.restaurantId).then(function(menuItemIds) {
+		"&restaurantId=" + params.restaurantId).catch(function(error) {
+		return Promise.reject(new Error("ML EndPoint Failed"));
+	}).then(function(menuItemIds) {
 		return dbutil.getAllByKeys(dbutil.refs.menuItemRef, menuItemIds);
-	}).catch(function(error) {
-		return [];
 	});
 }
 
