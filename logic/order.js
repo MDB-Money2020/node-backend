@@ -99,7 +99,7 @@ function placeOrder(params) {
 			var orderItem = orderItems[key];
 			var price = orderItem.menuItemPrice;
 			price *= orderItem.quantity;
-			total += price * 100;
+			total += price;
 			return total;
 		}, 0) + "";
 		return visadirecturil.payment({
