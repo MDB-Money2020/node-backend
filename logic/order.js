@@ -37,7 +37,7 @@ function _sendReciept(user, order) {
 			userName: user.fullName,
 			userEmail: user.email,
 			invoiceItems: invoiceItems,
-			totalPaid: order.totalPaid
+			totalPaid: Math.ceil(order.totalPaid)
 		}
 		return mailutil.renderTemplate(recieptTemplate, data);
 	}).then(function(html) {
