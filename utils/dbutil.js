@@ -40,7 +40,7 @@ function _multipleCallback(snapshot) {
 // 	console.log("backing up...");
 // 	return rootRef.once("value").then(function(snapshot) {
 // 		var data = snapshot.val();
-// 		fs.writeJsonSync("./db-backup.json", "utf-8", data);
+// 		fs.writeJsonSync("./db-backup.json", data);
 // 		console.log("done!");
 // 	}).catch(function(error) {
 // 	  console.error("fail :(");
