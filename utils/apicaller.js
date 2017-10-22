@@ -1,5 +1,7 @@
 // DEPENDENCIES
-var request = require("request");
+var request = require("request").defaults({
+  encoding: null
+});
 
 // HELPER
 function _makeRequest(options) {

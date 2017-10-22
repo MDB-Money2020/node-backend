@@ -74,7 +74,6 @@ function storeImageInS3(img, name, id, fileExt) {
 function process_image(url) {
   var encoded;
   var fileExt = url.split('.').pop();
-  console.log("PHASE0: " + url)
   return apicaller.get(url).then(function(data) {
     encoded = data;
     var params = {
@@ -85,7 +84,6 @@ function process_image(url) {
       },
       MaxFaces: 1
     };
-    console.log("PHASE1: ", encoded);
     return get_face(params);
   }).then(function(faceId) {
     var params = {
@@ -100,10 +98,8 @@ function process_image(url) {
         }
       }
     }
-    console.log("PHASE2")
     return get_item_and_store(params, encoded, fileExt);
   }).then(function(userId) {
-    console.log("PHASE3")
     return user.getById({
       userId: userId
     });
