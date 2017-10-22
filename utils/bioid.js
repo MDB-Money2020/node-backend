@@ -31,7 +31,7 @@ function get_face(params) {
         data.FaceMatches.length == 0 ||
         !data.FaceMatches[0].Face || !data.FaceMatches[0].Face.FaceId
       ) {
-        reject(new Error("bad data"));
+        reject(new Error("bad face data"));
       } else {
         resolve(data.FaceMatches[0].Face.FaceId);
       }
@@ -46,7 +46,7 @@ function get_item_and_store(params, encodedUrl, fileExt) {
         reject(err);
       } else if (!data || !data.Item || !data.Item.FullName || !data.Item
         .Id) {
-        reject(new Error("bad data"));
+        reject(new Error("bad item data"));
       } else {
         storeImageInS3(encodedUrl, data.Item.FullName.S, data.Item.Id.S,
             fileExt)
