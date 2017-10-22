@@ -10,8 +10,13 @@ function _makeRequest(options) {
       else if (String(resp.statusCode)[0] != "2")
         reject(resp.body);
       else {
-        var body = JSON.parse(resp.body);
-        var result = body.result == null ? body : body.result;
+        var result;
+        try {
+          var body = JSON.parse(resp.body);
+          result = body.result == null ? body : body.result;
+        } catch(e) {
+          result = resp.body;
+        }
         resolve(result);
       }
     });
