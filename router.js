@@ -199,6 +199,7 @@ router.get("/users/:userId/", function(req, res) {
 });
 
 router.post("/users/", function(req, res) {
+  req.checkBody("profPicUrl", missingErrorMessage).notEmpty();
   req.checkBody("email", missingErrorMessage).notEmpty();
   req.checkBody("fullName", missingErrorMessage).notEmpty();
   req.checkBody("accountNumber", missingErrorMessage).notEmpty();
