@@ -1,6 +1,7 @@
 // CONSTANTS
 const firebaseConfVars = [
-  "firebaseDBUrl"
+  "firebase_db_url", "firebase_private_key", "firebase_project_id",
+  "firebase_client_email"
 ];
 
 const visaConfVars = [

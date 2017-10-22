@@ -43,8 +43,8 @@ VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, method
 
 	var userId = config.userId ;
 	var password = config.password;
-	var keyFile = config.key;
-	var certificateFile = config.cert;
+	var keyFile = config.key.replace(/\\n/g, '\n');
+	var certificateFile = config.cert.replace(/\\n/g, '\n');
 	logRequest(requestBody, path);
 
 	if (methodType === 'POST' || methodType === 'PUT') {
@@ -56,9 +56,9 @@ VisaAPIClient.prototype.doMutualAuthRequest = function(path, requestBody, method
 	headers['ex-correlation-id'] = randomstring.generate({length:12, charset: 'alphanumeric'}) + '_SC'
 	request({
 		uri : config.visaUrl + path,
-		key: fs.readFileSync(keyFile),
+		key: keyFile,
 		method : methodType,
-		cert: fs.readFileSync(certificateFile),
+		cert: certificateFile,
 		headers: headers,
 		body: requestBody,
 		timeout: 30000

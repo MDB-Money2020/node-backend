@@ -1,13 +1,16 @@
 // DEPENDENCIES
 var firebase = require("firebase-admin");
-var firebaseDBUrl = require("./cloudconfig.js").firebaseConf.firebaseDBUrl;
-var serviceAccount = require("../firebase-admin-conf.json");
+var serviceAccount = require("./cloudconfig.js").firebaseConf;
 var apputil = require("./apputil.js");
 
 // SETUP
 firebase.initializeApp({
-	credential: firebase.credential.cert(serviceAccount),
-	databaseURL: firebaseDBUrl
+	credential: firebase.credential.cert({
+		projectId: serviceAccount.firebase_project_id,
+    clientEmail: serviceAccount.firebase_client_email,
+    privateKey: serviceAccount.firebase_private_key.replace(/\\n/g, '\n')
+	}),
+	databaseURL: serviceAccount.firebase_db_url
 });
 
 var rootRef = firebase.database().ref();
