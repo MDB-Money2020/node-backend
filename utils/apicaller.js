@@ -15,7 +15,6 @@ function _makeRequest(options) {
   });
 }
 
-
 // METHODS
 function get(url, headers) {
   var options = {
