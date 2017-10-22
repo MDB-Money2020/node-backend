@@ -19,6 +19,7 @@ refs.menuItemRef = rootRef.child("MenuItems");
 refs.restaurantRef = rootRef.child("Restaurants");
 refs.userRef = rootRef.child("Users");
 refs.orderRef = rootRef.child("Orders");
+refs.statsRef = rootRef.child("Stats");
 
 // HELPER
 function _multipleCallback(snapshot) {
