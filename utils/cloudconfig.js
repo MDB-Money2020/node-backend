@@ -1,4 +1,8 @@
 // CONSTANTS
+const mlConf = [
+  "ml_endpoint"
+];
+
 const firebaseConfVars = [
   "firebase_db_url", "firebase_private_key", "firebase_project_id",
   "firebase_client_email"
@@ -39,4 +43,5 @@ function getConfig(vars, renameVars) {
 // EXPORTS
 module.exports.firebaseConf = getConfig(firebaseConfVars);
 module.exports.mailConf = getConfig(mailConfVars);
+module.exports.mlConf = getConfig(mlConf);
 module.exports.visaConf = getConfig(visaConfVars, visaRenameVars);

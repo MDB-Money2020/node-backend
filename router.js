@@ -129,11 +129,17 @@ router.post("/orders", function(req, res) {
 
 //MENUITEM METHODS
 
-router.get("/menuitems/:menuItemId?/:restaurantId?/:userId?", function(req, res) {
+router.get("/menuitems/:menuItemId?/:restaurantId?/:userId?/:suggested?", function(req, res) {
   if (req.query.menuItemId) {
     req.checkQuery("menuItemId", missingErrorMessage).notEmpty();
     req.checkQuery("menuItemId", dbErrorMessage).keyExistsInDB(dbutil.refs.menuItemRef);
     return completeRequest(req, res, menuItem.getById);
+  } else if (req.query.restaurantId && req.query.userId && req.query.suggested) {
+    req.checkQuery("restaurantId", missingErrorMessage).notEmpty();
+    req.checkQuery("restaurantId", dbErrorMessage).keyExistsInDB(dbutil.refs.restaurantRef);
+    req.checkQuery("userId", missingErrorMessage).notEmpty();
+    req.checkQuery("userId", dbErrorMessage).keyExistsInDB(dbutil.refs.userRef);
+    return completeRequest(req, res, menuItem.getSuggested);
   } else if (req.query.restaurantId) {
     req.checkQuery("restaurantId", missingErrorMessage).notEmpty();
     req.checkQuery("restaurantId", dbErrorMessage).keyExistsInDB(dbutil.refs.restaurantRef);

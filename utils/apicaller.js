@@ -9,8 +9,11 @@ function _makeRequest(options) {
         reject(err);
       else if (String(resp.statusCode)[0] != "2")
         reject(resp.body);
-      else
-        resolve(JSON.parse(resp.body).result);
+      else {
+        var body = JSON.parse(resp.body);
+        var result = body.result == null ? body : body.result;
+        resolve(result);
+      }
     });
   });
 }
