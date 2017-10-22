@@ -1,6 +1,7 @@
 var dbutil = require("../utils/dbutil.js");
 var apputil = require("../utils/apputil.js");
 var visadirecturil = require("../utils/visadirectutil.js");
+var mailutil = require("../utils/mailutil.js");
 
 function getById(params) {
 	var id = params.orderId;
@@ -76,6 +77,12 @@ function placeOrder(params) {
 		};
 		if (instructions) order.additionalInstructions = instructions;
 		return dbutil.createNewObjectByAutoId(dbutil.refs.orderRef, order);
+	}).then(function(order) {
+		return mailutil.sendEmail(user.email, "Money2020 Hackathon", "Reciept: " + JSON.stringify(order, null, 2)).catch(function(error) {
+			console.error("MAIL FAIL TO SEND");
+		}).then(function() {
+			return order;
+		});
 	});
 }
 

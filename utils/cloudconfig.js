@@ -18,6 +18,12 @@ const visaRenameVars = {
   "visa_cert": "cert"
 };
 
+
+const mailConfVars = [
+  "smtp_host", "smtp_port", "smtp_secure",
+  "smtp_email", "smtp_password", "smtp_from"
+];
+
 // METHODS
 function getConfig(vars, renameVars) {
   var conf = {};
@@ -32,4 +38,5 @@ function getConfig(vars, renameVars) {
 
 // EXPORTS
 module.exports.firebaseConf = getConfig(firebaseConfVars);
+module.exports.mailConf = getConfig(mailConfVars);
 module.exports.visaConf = getConfig(visaConfVars, visaRenameVars);
