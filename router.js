@@ -192,6 +192,7 @@ router.get("/users/:userId/", function(req, res) {
 });
 
 router.post("/users/", function(req, res) {
+  req.checkBody("email", missingErrorMessage).notEmpty();
   req.checkBody("fullName", missingErrorMessage).notEmpty();
   req.checkBody("accountNumber", missingErrorMessage).notEmpty();
   req.checkBody("address", missingErrorMessage).notEmpty();
