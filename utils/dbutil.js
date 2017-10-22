@@ -2,13 +2,14 @@
 var firebase = require("firebase-admin");
 var serviceAccount = require("./cloudconfig.js").firebaseConf;
 var apputil = require("./apputil.js");
+var fs = require("fs-extra");
 
 // SETUP
 firebase.initializeApp({
 	credential: firebase.credential.cert({
 		projectId: serviceAccount.firebase_project_id,
-    clientEmail: serviceAccount.firebase_client_email,
-    privateKey: serviceAccount.firebase_private_key.replace(/\\n/g, '\n')
+		clientEmail: serviceAccount.firebase_client_email,
+		privateKey: serviceAccount.firebase_private_key.replace(/\\n/g, '\n')
 	}),
 	databaseURL: serviceAccount.firebase_db_url
 });
@@ -35,6 +36,19 @@ function _multipleCallback(snapshot) {
 }
 
 // METHODS
+// function _backupDB() {
+// 	console.log("backing up...");
+// 	return rootRef.once("value").then(function(snapshot) {
+// 		var data = snapshot.val();
+// 		fs.writeJsonSync("./db-backup.json", "utf-8", data);
+// 		console.log("done!");
+// 	}).catch(function(error) {
+// 	  console.error("fail :(");
+// 	});
+// }
+//
+// _backupDB();
+
 function getAll(ref) {
 	return ref.once("value").then(_multipleCallback);
 }
