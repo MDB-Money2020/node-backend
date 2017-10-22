@@ -25,7 +25,6 @@ function get_and_encode(url) {
 function get_face(params) {
   return new Promise(function(resolve, reject) {
     rekognition.searchFacesByImage(params, function(err, data) {
-      console.log("face data: ", JSON.stringify(data, null, 2));
       if (err) {
         reject(err);
       } else if (!data || !data.FaceMatches ||
@@ -42,9 +41,7 @@ function get_face(params) {
 
 function get_item_and_store(params, encodedUrl, fileExt) {
   return new Promise(function(resolve, reject) {
-    console.log("item call params: ", JSON.stringify(params, null, 2));
     db.getItem(params, function(err, data) {
-      console.log("item data: ", JSON.stringify(data, null, 2));
       if (err) {
         reject(err);
       } else if (!data || !data.Item || !data.Item.FullName || !data.Item
