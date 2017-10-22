@@ -13,12 +13,13 @@ function _getInvoiceItems(order) {
 	var plist = [];
 	Object.keys(order.orderItems).forEach(function(key) {
 		var item = order.orderItems[key];
-		plist.push(dbutil.getByKey(dbutil.refs.menuItemRef, key).then(function(menuItem) {
+		plist.push(dbutil.getByKey(dbutil.refs.menuItemRef, key).then(function(
+			menuItem) {
 			invoiceItems.push({
 				name: menuItem.title,
 				price: item.menuItemPrice
 			});
-		}))
+		}).catch(function(error) {}));
 	})
 	return Promise.all(plist).then(function() {
 		return invoiceItems;
@@ -32,7 +33,7 @@ function _sendReciept(user, order) {
 		date.setDate(date.getDate() - 6);
 		date.setFullYear(date.getFullYear() - 1);
 		var dateStr = date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
-		var totalPaid = String(order.totalPaid.toFixed(2));
+		var totalPaid = String(Number(order.totalPaid).toFixed(2));
 		var data = {
 			dateStr: dateStr,
 			userName: user.fullName,
