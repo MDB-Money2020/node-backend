@@ -88,7 +88,7 @@ function storeImageInS3(img, name, id, fileExt) {
 function process_image(url) {
   var encoded;
   var fileExt = url.split('.').pop();
-  console.log("PHASE0")
+  console.log("PHASE0: " + url)
   return get(url).then(function(data) {
     encoded = data;
     var params = {
