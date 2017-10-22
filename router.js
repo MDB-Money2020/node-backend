@@ -41,9 +41,6 @@ router.use(expressValidator({
     isValidNumber: function(param) {
       var num = +param;
       return !isNaN(num);
-    },
-    isValidUrl: function(param) {
-      return isUrl(param);
     }
   }
 }));
@@ -202,6 +199,11 @@ router.post("/users/", function(req, res) {
   req.checkBody("state", missingErrorMessage).notEmpty();
   return completeRequest(req, res, user.createUser);
 });
+
+router.patch("/users/verification/", function(req, res) {
+  req.checkBody("imageUrl", missingErrorMessage).notEmpty();
+  return completeRequest(req, res, user.verify);
+})
 
 // EXPORTS
 module.exports = router;
